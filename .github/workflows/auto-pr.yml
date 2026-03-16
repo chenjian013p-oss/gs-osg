@@ -1,0 +1,19 @@
+name: Auto Create PR
+on:
+  push:
+    branches:
+      - "dev"  # 监听dev分支的代码提交
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: "dev"  # 源分支
+          destination_branch: "main"  # 目标分支
+          pr_title: "Auto PR: dev → main"  # PR标题
+          pr_body: "Automatically created PR from dev branch"  # PR描述
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub自动生成的令牌，无需手动配置
