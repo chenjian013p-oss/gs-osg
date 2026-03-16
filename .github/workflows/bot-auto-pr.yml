@@ -77,7 +77,7 @@ jobs:
       # 6. 自动合并 PR（可选，需满足分支保护规则）
       - name: Auto Merge PR
         if: steps.create-pr.outputs.pull-request-number != ''
-        uses: pascalgn/automerge-action@v0.16.3
+        uses: pascalgn/automerge-action@v0.16.4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           merge-method: squash  # 合并方式：压缩提交
