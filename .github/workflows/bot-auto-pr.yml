@@ -46,7 +46,7 @@ jobs:
       # 4. 创建 Pull Request
       - name: Create Automated PR
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           # 使用 GitHub 内置 Token（无需手动创建）
           token: ${{ secrets.GITHUB_TOKEN }}
