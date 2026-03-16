@@ -1,0 +1,5 @@
+C:/Users/Zlon/osgGaussianPlugin/build/CMakeFiles/osgdb_gply.dir
+C:/Users/Zlon/osgGaussianPlugin/build/CMakeFiles/glinfo.dir
+C:/Users/Zlon/osgGaussianPlugin/build/CMakeFiles/INSTALL.dir
+C:/Users/Zlon/osgGaussianPlugin/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Zlon/osgGaussianPlugin/build/CMakeFiles/ZERO_CHECK.dir
