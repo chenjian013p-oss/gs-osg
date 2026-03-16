@@ -1,0 +1,86 @@
+# 工作流名称
+name: Bot Auto Create Pull Request
+
+# 触发方式：支持手动触发 + 每日定时触发（可按需修改）
+on:
+  # 手动触发（在 GitHub 仓库 Actions 页面点击运行）
+  workflow_dispatch:
+  # 定时触发：每天 UTC 时间 0 点运行（对应北京时间 8 点）
+  schedule:
+    - cron: '0 0 * * *'
+
+# 工作流权限（最小权限原则）
+permissions:
+  contents: write        # 允许修改代码/创建分支
+  pull-requests: write   # 允许创建/更新/审批 PR
+  issues: read           # 仅读取 Issues（非必需，可删除）
+
+# 核心任务
+jobs:
+  bot-create-pr:
+    # 运行环境：最新版 Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 拉取仓库代码
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 拉取完整提交历史（避免分支创建失败）
+
+      # 2. 配置 Git 身份（必须，否则提交会失败）
+      - name: Configure Git User
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # 3. 【核心】机器人执行的自定义操作（重点修改这里）
+      # 示例：自动更新 README 中的时间戳（替换为你的实际需求）
+      - name: Run Bot Custom Task
+        run: |
+          echo "=== 机器人开始执行自定义任务 ==="
+          # 👇 替换为你的实际操作（如更新依赖、生成文档、修改配置等）
+          echo "Last updated: $(date +'%Y-%m-%d %H:%M:%S')" >> README.md
+          # 检查修改
+          git status
+
+      # 4. 创建 Pull Request
+      - name: Create Automated PR
+        id: create-pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          # 使用 GitHub 内置 Token（无需手动创建）
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # 提交信息
+          commit-message: "🤖 Bot: Auto update content"
+          # PR 标题
+          title: "🤖 Bot: Automated content update"
+          # PR 描述
+          body: |
+            This PR is automatically created by GitHub Actions Bot.
+            - Updated content via scheduled task
+            - No manual intervention required
+          # 机器人创建的分支名（避免冲突）
+          branch: bot/auto-update-${{ github.run_id }}
+          # PR 合并后自动删除分支
+          delete-branch: true
+          # 目标分支（通常是 main/master）
+          base: main
+
+      # 5. 自动审批 PR（可选，需分支保护放行）
+      - name: Auto Approve PR
+        if: steps.create-pr.outputs.pull-request-number != ''
+        uses: hmarr/auto-approve-action@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
+
+      # 6. 自动合并 PR（可选，需满足分支保护规则）
+      - name: Auto Merge PR
+        if: steps.create-pr.outputs.pull-request-number != ''
+        uses: pascalgn/automerge-action@v0.16.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash  # 合并方式：压缩提交
+          pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
+          # 仅当 CI 检查通过时合并（可选）
+          required-status-checks: "true"
