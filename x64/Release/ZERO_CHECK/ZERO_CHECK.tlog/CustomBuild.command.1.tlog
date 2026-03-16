@@ -1,0 +1,10 @@
+^C:\USERS\ZLON\OSGGAUSSIANPLUGIN\BUILD\CMAKEFILES\8B4A7AE5CBE57598991DC6F988C8E800\GENERATE.STAMP.RULE
+setlocal
+E:\CMAKE\bin\cmake.exe -SC:/Users/Zlon/osgGaussianPlugin -BC:/Users/Zlon/osgGaussianPlugin/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Zlon/osgGaussianPlugin/build/osgGaussianPlugin.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

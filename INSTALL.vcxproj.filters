@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Zlon\osgGaussianPlugin\build\CMakeFiles\8b4a7ae5cbe57598991dc6f988c8e800\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{71F83B5B-5A06-32A3-B078-19C6EA2BFB84}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
