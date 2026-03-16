@@ -1,0 +1,19 @@
+# Dependabot核心配置
+version: 2
+updates:
+  # 配置1：监控代码依赖（如Python包、npm包等）
+  - package-ecosystem: "pip"  # 适配Python项目，若为前端改"npm"
+    directory: "/"  # 监控根目录的requirements.txt/pyproject.toml
+    schedule:
+      interval: "daily"  # 每日检查依赖更新
+    open-pull-requests-limit: 10  # 最多同时开10个PR
+    target-branch: "main"  # PR合并的目标分支（通常是main/dev）
+    labels:
+      - "dependencies"  # 给PR自动加标签
+      - "auto-pr"       # 自定义标签，方便筛选
+
+  # 配置2：监控GitHub Actions工作流依赖（可选，增强协作）
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
