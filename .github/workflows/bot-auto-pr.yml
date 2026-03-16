@@ -23,7 +23,7 @@ jobs:
     steps:
       # 1. 拉取仓库代码
       - name: Checkout Repository Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0  # 拉取完整提交历史（避免分支创建失败）
 
